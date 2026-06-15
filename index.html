@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Turkcell One Paketleri</title>
+<link rel="icon" href="assets/turkcell-logo.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="preline"><div class="wrap"><a class="on">Bireysel</a><a>Kurumsal</a><a>superonline.net</a></div></div>
+
+<header class="hdr"><div class="wrap">
+  <button class="burger" id="burger" aria-label="Menü"><span></span><span></span><span></span></button>
+  <a href="index.html"><img class="hdr__logo" src="assets/turkcell-logo.png" alt="Turkcell"></a>
+  <nav class="nav">
+    <a>Pasaj</a><a>Paketler</a><a>Dijital Servisler ve Uygulamalar</a><a>Ev İnterneti ve TV+</a><a>Kampanyalar</a>
+  </nav>
+  <div class="hdr__right">
+    <span class="qi">Hızlı İşlemler ▾</span>
+    <span class="ic"><svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg></span>
+    <span class="ic cart"><svg class="icon" viewBox="0 0 24 24"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg><span class="badge">0</span></span>
+    <button class="btn-login">Giriş Yap</button>
+  </div>
+</div></header>
+
+<div class="wrap">
+  <div class="crumb"><a href="index.html">Ana Sayfa</a><span class="sep">›</span><a>Paket ve Tarifeler</a><span class="sep">›</span><span class="cur">Turkcell One</span></div>
+</div>
+
+<div class="subtabs"><div class="wrap">
+  <span class="arrow">‹</span>
+  <a>Yeni Turkcell'liler</a>
+  <a class="active">Faturalı Paketler</a>
+  <a>Turkcell Rahat Paketler</a>
+  <a>Faturasız Paketler</a>
+  <a>Ek Paketler</a>
+  <a>Faturasızdan Faturalı'ya Geçiş</a>
+  <span class="arrow">›</span>
+</div></div>
+
+<div class="wrap">
+  <div class="banner">
+    <div class="banner__txt"><h1>5G Gücünde Faturalı Hat</h1><p>Halihazırda faturalı hat kullananlar için tüm tekliflerimiz</p></div>
+    <img class="banner__img" src="assets/5g-banner.webp" alt="5G">
+  </div>
+
+  <div class="toolbar">
+    <div class="tool-pill" id="filterBtn">Filtrele <svg class="icon" style="stroke:#6b7280;width:18px;height:18px" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg></div>
+    <div class="tool-chip">Karşılaştır <button class="toggle" id="cmpToggle"></button></div>
+    <div class="spacer"></div>
+    <div class="sortsel">Sırala <svg class="icon" style="stroke:#6b7280;width:16px;height:16px" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div>
+    <div class="viewbtns">
+      <button class="viewbtn"><svg class="icon" style="stroke:currentColor;width:18px;height:18px" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+      <button class="viewbtn on"><svg class="icon" style="stroke:currentColor;width:18px;height:18px" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/></svg></button>
+    </div>
+  </div>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="login-card"><b>Merhaba</b><p>Avantajlı tekliflerimizi ve sadece online'a özel fırsatları görmek için giriş yapın.</p><a class="gbtn">Giriş Yap</a></div>
+      <div class="side-card"><h4>5G Gücünde Faturalı Hat <span class="chev">⌃</span></h4>
+        <div class="side-opt"><span class="radio"></span> Faturalı Hatlara Özel</div>
+        <div class="back-cat">‹ Önceki Kategorilere Dön</div>
+      </div>
+      <div class="side-card"><h4>Paket Grupları <span class="chev">⌃</span></h4>
+        <div class="side-opt"><span class="box"></span> Turkcell One</div>
+      </div>
+      <div class="side-card"><h4>İnternet Miktarı <span class="chev">⌃</span></h4>
+        <div class="side-opt"><span class="box"></span> 0-20 GB Arası</div>
+        <div class="side-opt"><span class="box"></span> 20-40 GB Arası</div>
+        <div class="side-opt"><span class="box"></span> 40 GB ve Üstü</div>
+      </div>
+      <div class="side-card"><h4>Ses Miktarı <span class="chev">⌃</span></h4>
+        <div class="side-opt"><span class="box"></span> 0-1000 DK Arası</div>
+        <div class="side-opt"><span class="box"></span> 1000 DK Üzeri</div>
+      </div>
+      <div class="side-card"><h4>Fiyat <span class="chev">⌃</span></h4>
+        <div class="side-opt"><span class="box"></span> 0-200 TL Arası</div>
+        <div class="side-opt"><span class="box"></span> 200-400 TL Arası</div>
+        <div class="side-opt"><span class="box"></span> 400 TL ve Üzeri</div>
+      </div>
+    </aside>
+
+    <section class="cards" id="cards"><!-- app.js renders enriched paket kartları --></section>
+  </div>
+</div>
+
+<footer class="footer" id="footer"></footer>
+
+<div class="drawer" id="drawer">
+  <div class="drawer__bg" data-close></div>
+  <div class="drawer__panel">
+    <button class="drawer__close" data-close>×</button>
+    <div style="clear:both"></div>
+    <a>Pasaj</a><a>Paketler</a><a>Dijital Servisler ve Uygulamalar</a><a>Ev İnterneti ve TV+</a><a>Kampanyalar</a><a>Giriş Yap</a>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
