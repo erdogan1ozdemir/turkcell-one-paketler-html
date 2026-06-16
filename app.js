@@ -83,7 +83,7 @@
     const id=(new URLSearchParams(location.search).get('paket'))||'star';
     const p=PKG[id]||PKG.star;
     const set=(s,v)=>{const e=document.querySelector(s);if(e)e.textContent=v;};
-    set('#dName',p.name); set('#dDisc',`Servislerde Geçerli ${p.disc} İndirim`); set('#dCardName',p.name); set('#crumbCur',p.name);
+    set('#dName',p.name); set('#dCardName',p.name); set('#crumbCur',p.name);
     document.querySelectorAll('.d-desc').forEach(e=>e.textContent=`${p.name} ile tek bir yerden ve sabit fiyat garantisiyle favori platformlarınızın keyfini çıkarın!`);
     document.querySelector('#prT').innerHTML=p.t+'<small> TL</small>';
     document.querySelector('#prN').innerHTML=p.nt+'<small> TL</small>';
@@ -91,9 +91,14 @@
     // platform grid (tam)
     const pg=document.getElementById('platGrid');
     if(pg)pg.innerHTML=p.plats.map(k=>{const[l,n,d]=PLAT[k];return `<div class="plat-item"><img src="assets/${l}" alt="${n}"><div><b>${n}</b><span>${d}</span></div></div>`;}).join('');
-    // platform şeridi (hero · varyant B/C/D)
+    // platform şeridi (hero · varyant B/C)
     const strip=document.getElementById('dPlatStrip');
     if(strip){const show=p.plats.slice(0,8);strip.innerHTML=tiles(show)+(p.plats.length>show.length?`<span class="more">+${p.plats.length-show.length}</span>`:'');}
+    // zenginleştirilmiş sol kart: logolar + hap bilgiler (varyant A & D)
+    const cplats=document.getElementById('dCardPlats');
+    if(cplats)cplats.innerHTML=tiles(p.plats);
+    const cpills=document.getElementById('dCardPills');
+    if(cpills)cpills.innerHTML=`<span class="pill-i">${p.disc} indirim</span><span class="pill-i">${p.tier}</span><span class="pill-i fix">✓ 12 ay sabit fiyat</span><span class="pill-i fix">~%40 daha uygun</span>`;
     // değer kutusu (varyant C)
     const val=document.getElementById('dValue');
     if(val)val.innerHTML=`<b>Tek tek alımda ~${oldPrice(p.t)} TL yerine ${p.t} TL</b><span>Dahil platformları tek tek almaya kıyasla ~%40 daha uygun · 12 ay boyunca sabit fiyat.</span>`;
