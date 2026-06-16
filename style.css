@@ -139,8 +139,8 @@ button{font-family:inherit;cursor:pointer}
 /* zenginleştirilmiş sol kart (varyant A & D): logolar + hap bilgiler */
 .dcard__inc{display:none;margin-top:14px}
 .dcard__inc .inc-label{font-size:.68rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin:0 0 9px}
-.dcard__inc .plats{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
-.dcard__inc .plats img{width:100%;aspect-ratio:1;border-radius:10px;object-fit:cover;background:#0b0b0b}
+.dcard__inc .plats{display:flex;flex-wrap:wrap;gap:7px}
+.dcard__inc .plats img{width:38px;height:38px;border-radius:9px;object-fit:cover;background:#0b0b0b}
 .dcard__pills{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}
 .dcard__pills .pill-i{background:var(--soft2);color:var(--hdr);font-weight:800;font-size:.72rem;padding:5px 11px;border-radius:999px}
 .dcard__pills .pill-i.fix{background:var(--soft);color:var(--muted);font-weight:700}
