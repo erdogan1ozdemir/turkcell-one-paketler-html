@@ -54,11 +54,12 @@
   /* ---- liste: zenginleştirilmiş paket kartları (tüm varyant öğeleri DOM'da, CSS ile gösterilir) ---- */
   const cardsEl=document.getElementById('cards');
   if(cardsEl){
+    const detailRows=p=>p.plats.map(k=>`<li><img src="assets/${PLAT[k][0]}" alt="${PLAT[k][1]}"><span>${PLAT[k][1]}<em>${PLAT[k][2]}</em></span></li>`).join('');
     cardsEl.innerHTML=Object.entries(PKG).map(([id,p])=>`
-      <a class="pcard ${p.feat?'feat':''}" href="detay.html?paket=${id}">
+      <div class="pcard ${p.feat?'feat':''}" data-id="${id}">
         <span class="disc-ribbon">Servislerde geçerli ${p.disc} indirim avantajı</span>
         <div class="pcard__head">
-          <span class="pcard__detail-top">Detaylar ›</span>
+          <button class="pcard__detail-top" data-toggle type="button">Detaylar ›</button>
           <span class="disc">Servislerde Geçerli ${p.disc} İndirim</span>
           <h3>${p.name}</h3>
           ${p.feat?'<span class="feat-rib">En Çok Tercih Edilen</span>':''}
@@ -71,11 +72,21 @@
           <div class="hl-row"><span class="chip-tier">${p.tier}</span><span class="chip-fix">✓ 12 ay sabit fiyat</span></div>
           <div class="pcard__foot">
             <div class="pcard__price">${p.t} TL<small>/1 AY</small></div>
-            <span class="pcard__go">İncele ›</span>
-            <span class="pcard__go pcard__go--d">Detaylar ›</span>
+            <a class="pcard__go" href="detay.html?paket=${id}">İncele ›</a>
+            <button class="pcard__go pcard__go--d" data-toggle type="button">Detaylar <span class="cv">▾</span></button>
+          </div>
+          <div class="pcard__details">
+            <div class="pd-grid">
+              <div><div class="pd-label">Pakete dahil platformlar</div><ul class="pd-list">${detailRows(p)}</ul></div>
+              <div><div class="pd-label">Öne çıkanlar</div><ul class="pd-hl"><li>Tek fatura · hepsi mobil faturanda</li><li>12 ay sabit fiyat garantisi</li><li>Tek tek almaya göre ~%40 daha uygun</li><li>Kredi kartı gerekmez · faturana yansır</li></ul><div class="pd-tier">${p.tier} · Taahhütlü ${p.t} TL · Taahhütsüz ${p.nt} TL</div></div>
+            </div>
+            <a class="pd-cta" href="detay.html?paket=${id}">Paketi incele ve satın al →</a>
           </div>
         </div>
-      </a>`).join('');
+      </div>`).join('');
+    cardsEl.querySelectorAll('[data-toggle]').forEach(b=>b.addEventListener('click',e=>{
+      e.preventDefault();e.stopPropagation();b.closest('.pcard').classList.toggle('open');
+    }));
   }
 
   /* ---- detay sayfası ---- */
@@ -99,9 +110,9 @@
     if(cplats)cplats.innerHTML=tiles(p.plats);
     const cpills=document.getElementById('dCardPills');
     if(cpills)cpills.innerHTML=`<span class="pill-i">${p.disc} indirim</span><span class="pill-i">${p.tier}</span><span class="pill-i fix">✓ 12 ay sabit fiyat</span><span class="pill-i fix">~%40 daha uygun</span>`;
-    // değer kutusu (varyant C)
-    const val=document.getElementById('dValue');
-    if(val)val.innerHTML=`<b>Tek tek alımda ~${oldPrice(p.t)} TL yerine ${p.t} TL</b><span>Dahil platformları tek tek almaya kıyasla ~%40 daha uygun · 12 ay boyunca sabit fiyat.</span>`;
+    // değer kutusu (varyant C · sol karta taşındı)
+    const cval=document.getElementById('dCardValue');
+    if(cval)cval.innerHTML=`<div class="dcv-row"><span class="dcv-old">Tek tek ~${oldPrice(p.t)} TL</span><span class="dcv-new">${p.t} TL<small>/ay</small></span></div><span class="dcv-sub">Dahil platformları tek tek almaya kıyasla ~%40 daha uygun · 12 ay boyunca sabit fiyat garantisi.</span>`;
     // detay butonları kaydırma
     document.querySelectorAll('[data-scroll]').forEach(b=>b.addEventListener('click',e=>{
       e.preventDefault();const t=document.querySelector(b.dataset.scroll);if(t)t.scrollIntoView({behavior:'smooth',block:'start'});
