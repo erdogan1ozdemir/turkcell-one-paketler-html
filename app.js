@@ -85,8 +85,18 @@
         </div>
       </div>`).join('');
     cardsEl.querySelectorAll('[data-toggle]').forEach(b=>b.addEventListener('click',e=>{
-      e.preventDefault();e.stopPropagation();b.closest('.pcard').classList.toggle('open');
+      e.preventDefault();e.stopPropagation();
+      const card=b.closest('.pcard');const wasOpen=card.classList.contains('open');
+      cardsEl.querySelectorAll('.pcard.open').forEach(c=>c.classList.remove('open'));
+      if(!wasOpen)card.classList.add('open');
     }));
+    // karta tıkla → paket detayına git (Detaylar / link / açık popover hariç)
+    cardsEl.querySelectorAll('.pcard').forEach(card=>card.addEventListener('click',e=>{
+      if(e.target.closest('[data-toggle]')||e.target.closest('a')||e.target.closest('.pcard__details'))return;
+      location.href='detay.html?paket='+card.dataset.id;
+    }));
+    // dışarı tıkla → açık popover'ı kapat
+    document.addEventListener('click',e=>{if(!e.target.closest('.pcard'))cardsEl.querySelectorAll('.pcard.open').forEach(c=>c.classList.remove('open'));});
   }
 
   /* ---- detay sayfası ---- */
