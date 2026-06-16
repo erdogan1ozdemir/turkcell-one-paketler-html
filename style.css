@@ -74,7 +74,8 @@ button{font-family:inherit;cursor:pointer}
 .sortsel{display:flex;align-items:center;gap:30px;background:#fff;border:1px solid var(--line2);border-radius:var(--r);padding:9px 14px;font-weight:700;font-size:.84rem;color:var(--muted)}
 
 /* layout */
-.layout{display:grid;grid-template-columns:300px 1fr;gap:22px;padding-bottom:50px}
+.layout{display:grid;grid-template-columns:300px 1fr;gap:22px;padding-bottom:50px;align-items:start}
+.cards{align-content:start}
 .sidebar{display:flex;flex-direction:column;gap:14px}
 .side-card{background:var(--soft);border:1px solid var(--line);border-radius:var(--r);padding:16px}
 .side-card h4{font-size:.92rem;color:var(--ink);display:flex;justify-content:space-between;align-items:center}
