@@ -38,6 +38,9 @@
       <h1 id="dName">Turkcell One Star</h1>
       <p class="detail__desc d-desc">Turkcell One Star ile tek bir yerden ve sabit fiyat garantisiyle favori platformlarınızın keyfini çıkarın!</p>
 
+      <div class="d-platstrip" id="dPlatStrip"></div>
+      <div class="d-value" id="dValue"></div>
+
       <div class="opt-box sel" data-opt="t">
         <span class="radio"></span>
         <span class="lab"><b>TAAHHÜTLÜ ABONELİK</b><span>12 Fatura Dönemi</span></span>
@@ -49,7 +52,8 @@
         <span class="pr" id="prN">750<small> TL</small></span>
       </div>
 
-      <button class="btn-buy">Satın Al</button>
+      <button class="btn-buy" id="buyTop">Satın Al</button>
+      <button class="d-detail-top" data-scroll="#platGrid">Tüm Detayları Gör ↓</button>
 
     </div>
   </div>
@@ -65,7 +69,7 @@
     </div>
   </div>
 
-  <div class="dsec"><h2>3 Adımda Abone Ol</h2>
+  <div class="dsec sec-steps"><h2>3 Adımda Abone Ol</h2>
     <div class="steps3">
       <div class="step3"><div class="n">1</div><b>Paketini seç</b><p>Sana en uygun One paketini belirle.</p></div>
       <div class="step3"><div class="n">2</div><b>SMS / uygulama ile onayla</b><p>Gelen bağlantı veya Turkcell uygulamasından aktive et.</p></div>
@@ -86,6 +90,8 @@
       </div></details>
     </div>
   </div>
+
+  <button class="d-detail-bottom" data-scroll="#dName">Pakete Dön &amp; Satın Al ↑</button>
 </div>
 
 <footer class="footer" id="footer"></footer>

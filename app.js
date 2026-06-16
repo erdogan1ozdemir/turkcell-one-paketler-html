@@ -1,4 +1,4 @@
-/* Turkcell One klon · ortak etkileşimler + footer + paket verisi */
+/* Turkcell One klon · ortak etkileşimler + footer + paket verisi + CRO varyant sistemi */
 (function(){
   /* ---- footer (canlı site ile bire bir kolon yapısı) ---- */
   const FCOLS=[
@@ -49,19 +49,31 @@
     premium:{name:"Turkcell One Premium",disc:"%39",t:690,nt:950,tier:"Netflix Premium",feat:false,plats:["tvplus","hbo","nPremium","amazon","ytp","ytm","fizy","wonjo","lifebox"]}
   };
   const tiles=ks=>ks.map(k=>`<img src="assets/${PLAT[k][0]}" alt="${PLAT[k][1]}" title="${PLAT[k][1]}">`).join('');
+  const oldPrice=t=>Math.round(t/0.6/10)*10; // ~%40 daha uygun varsayımı (tasarım göstergesi)
 
-  /* ---- liste: zenginleştirilmiş paket kartları (kırmızı kutu) ---- */
+  /* ---- liste: zenginleştirilmiş paket kartları (tüm varyant öğeleri DOM'da, CSS ile gösterilir) ---- */
   const cardsEl=document.getElementById('cards');
   if(cardsEl){
     cardsEl.innerHTML=Object.entries(PKG).map(([id,p])=>`
       <a class="pcard ${p.feat?'feat':''}" href="detay.html?paket=${id}">
-        <div class="pcard__head"><span class="disc">Servislerde Geçerli ${p.disc} İndirim</span><h3>${p.name}</h3>${p.feat?'<span class="feat-rib">En Çok Tercih Edilen</span>':''}</div>
+        <span class="disc-ribbon">Servislerde geçerli ${p.disc} indirim avantajı</span>
+        <div class="pcard__head">
+          <span class="pcard__detail-top">Detaylar ›</span>
+          <span class="disc">Servislerde Geçerli ${p.disc} İndirim</span>
+          <h3>${p.name}</h3>
+          ${p.feat?'<span class="feat-rib">En Çok Tercih Edilen</span>':''}
+        </div>
         <div class="pcard__body">
           <p class="desc">${p.name} ile tek bir yerden ve sabit fiyat garantisiyle favori platformlarınızın keyfini çıkarın!</p>
+          <div class="save-line"><span class="old">Tek tek ~${oldPrice(p.t)} TL</span><span class="new">${p.t} TL</span><span class="tag">~%40 daha uygun</span></div>
           <div class="inc-label">Pakete dahil platformlar</div>
           <div class="plats">${tiles(p.plats)}</div>
           <div class="hl-row"><span class="chip-tier">${p.tier}</span><span class="chip-fix">✓ 12 ay sabit fiyat</span></div>
-          <div class="pcard__foot"><div class="pcard__price">${p.t} TL<small>/1 AY</small></div><span class="pcard__go">İncele ›</span></div>
+          <div class="pcard__foot">
+            <div class="pcard__price">${p.t} TL<small>/1 AY</small></div>
+            <span class="pcard__go">İncele ›</span>
+            <span class="pcard__go pcard__go--d">Detaylar ›</span>
+          </div>
         </div>
       </a>`).join('');
   }
@@ -76,9 +88,19 @@
     document.querySelector('#prT').innerHTML=p.t+'<small> TL</small>';
     document.querySelector('#prN').innerHTML=p.nt+'<small> TL</small>';
     document.title=p.name;
-    // platform grid
+    // platform grid (tam)
     const pg=document.getElementById('platGrid');
     if(pg)pg.innerHTML=p.plats.map(k=>{const[l,n,d]=PLAT[k];return `<div class="plat-item"><img src="assets/${l}" alt="${n}"><div><b>${n}</b><span>${d}</span></div></div>`;}).join('');
+    // platform şeridi (hero · varyant B/C/D)
+    const strip=document.getElementById('dPlatStrip');
+    if(strip){const show=p.plats.slice(0,8);strip.innerHTML=tiles(show)+(p.plats.length>show.length?`<span class="more">+${p.plats.length-show.length}</span>`:'');}
+    // değer kutusu (varyant C)
+    const val=document.getElementById('dValue');
+    if(val)val.innerHTML=`<b>Tek tek alımda ~${oldPrice(p.t)} TL yerine ${p.t} TL</b><span>Dahil platformları tek tek almaya kıyasla ~%40 daha uygun · 12 ay boyunca sabit fiyat.</span>`;
+    // detay butonları kaydırma
+    document.querySelectorAll('[data-scroll]').forEach(b=>b.addEventListener('click',e=>{
+      e.preventDefault();const t=document.querySelector(b.dataset.scroll);if(t)t.scrollIntoView({behavior:'smooth',block:'start'});
+    }));
     // option select + sticky
     const boxes=[...document.querySelectorAll('.opt-box')];
     const sBar=document.querySelector('#stickyPrice'),sLab=document.querySelector('#stickyLab');
@@ -86,4 +108,42 @@
     boxes.forEach(b=>b.addEventListener('click',()=>sel(b)));
     if(boxes[0])sel(boxes[0]);
   }
+
+  /* ============================================================
+     CRO VARYANT SİSTEMİ · floating seçici + kalıcılık (localStorage)
+     ============================================================ */
+  const VARIANTS=[
+    ['a','Zengin','Geniş açıklama, büyük logolar ve etiketler · bilgi yoğun.'],
+    ['b','Sade','Küçük logolar, az metin, düz başlık, tek güçlü fiyat/CTA.'],
+    ['c','Değer','Tasarruf satırı + tam genişlik indirim şeridi · değer odaklı.'],
+    ['d','Detay','Türk Telekom tarzı belirgin "Detaylar" butonları (üst + alt).']
+  ];
+  const KEY='tcone_v';
+  function getV(){
+    const m=(location.hash||'').match(/v=([abcd])/i);     // ?#v=b ile QA / paylaşım override
+    if(m){const v=m[1].toLowerCase();try{localStorage.setItem(KEY,v);}catch(e){}return v;}
+    try{return localStorage.getItem(KEY)||'a';}catch(e){return 'a';}
+  }
+  function applyV(v){document.body.dataset.variant=v;
+    document.querySelectorAll('.vopt').forEach(o=>o.classList.toggle('on',o.dataset.v===v));
+    const dot=document.querySelector('.vswitch__tab .dot');if(dot)dot.textContent=v.toUpperCase();
+  }
+  function setV(v){try{localStorage.setItem(KEY,v);}catch(e){}applyV(v);}
+
+  const sw=document.createElement('div');
+  sw.className='vswitch';
+  sw.innerHTML=`
+    <button class="vswitch__tab" aria-label="Varyantlar">VARYANT <span class="dot">A</span></button>
+    <div class="vswitch__panel">
+      <h5>Tasarım Varyantı</h5>
+      <div class="vsub">CRO denemesi · seçim liste ve detay sayfasında geçerli</div>
+      ${VARIANTS.map(([k,t,d])=>`<div class="vopt" data-v="${k}"><span class="k">${k.toUpperCase()}</span><span class="vtxt"><b>${t}</b><span>${d}</span></span></div>`).join('')}
+      <div class="vswitch__note">Seçim tarayıcında saklanır; sayfalar arası korunur. Sunum/teslim için tek varyant sabitlenebilir.</div>
+    </div>`;
+  document.body.appendChild(sw);
+  sw.querySelector('.vswitch__tab').addEventListener('click',()=>sw.classList.toggle('open'));
+  sw.querySelectorAll('.vopt').forEach(o=>o.addEventListener('click',()=>setV(o.dataset.v)));
+  document.addEventListener('click',e=>{if(!sw.contains(e.target))sw.classList.remove('open');});
+  window.addEventListener('hashchange',()=>applyV(getV()));
+  applyV(getV());
 })();
